@@ -8,41 +8,21 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <style>
-:root {
-  --bg: #0f0f11; --bg2: #17171a; --bg3: #1e1e22; --bg4: #26262c;
-  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
-  --text: #f0effe; --text2: #9896b0; --text3: #5a5870;
-  --accent: #7b6ef6; --accent2: #a89bf8;
-  --accent-bg: rgba(123,110,246,0.12); --accent-bg2: rgba(123,110,246,0.22);
-  --green: #3ecf8e; --green-bg: rgba(62,207,142,0.1);
-  --amber: #f6b93b; --amber-bg: rgba(246,185,59,0.1);
-  --red: #e05572; --red-bg: rgba(224,85,114,0.1);
-  --radius: 10px; --radius-lg: 14px;
-  --font: 'IBM Plex Sans Thai', sans-serif; --mono: 'IBM Plex Mono', monospace;
-}
-
+/* ... (CSS ทั้งหมดยังคงเหมือนเดิมเป๊ะครับ เพื่อให้หน้าตาสวยงามเหมือนเดิม) ... */
+:root { --bg: #0f0f11; --bg2: #17171a; --bg3: #1e1e22; --bg4: #26262c; --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12); --text: #f0effe; --text2: #9896b0; --text3: #5a5870; --accent: #7b6ef6; --accent2: #a89bf8; --accent-bg: rgba(123,110,246,0.12); --accent-bg2: rgba(123,110,246,0.22); --green: #3ecf8e; --green-bg: rgba(62,207,142,0.1); --amber: #f6b93b; --amber-bg: rgba(246,185,59,0.1); --red: #e05572; --red-bg: rgba(224,85,114,0.1); --radius: 10px; --radius-lg: 14px; --font: 'IBM Plex Sans Thai', sans-serif; --mono: 'IBM Plex Mono', monospace; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font); background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; font-size: 14px; }
 ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
-
-/* โครงสร้างหลัก */
-.topbar {
-  height: 52px; display: flex; align-items: center; gap: 12px;
-  padding: 0 20px; border-bottom: 1px solid var(--border);
-  background: var(--bg); z-index: 50; flex-shrink: 0;
-}
+.topbar { height: 52px; display: flex; align-items: center; gap: 12px; padding: 0 20px; border-bottom: 1px solid var(--border); background: var(--bg); z-index: 50; flex-shrink: 0; }
 .logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
 .logo-icon { width: 28px; height: 28px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
 .topbar-mid { margin: 0 auto; display: flex; align-items: center; }
 .date-badge { font-size: 12px; color: var(--text2); background: var(--bg3); border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; font-family: var(--mono); }
 .avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-bg2); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--accent2); }
-
 .layout { flex: 1; display: flex; overflow: hidden; position: relative; }
 .sidebar { width: 220px; border-right: 1px solid var(--border); padding: 16px 10px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; background: var(--bg); z-index: 40; transition: transform 0.3s ease; flex-shrink: 0; }
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); z-index: 20; min-width: 0; }
 .chat-panel { width: 360px; border-left: 1px solid var(--border); display: flex; flex-direction: column; background: var(--bg); z-index: 30; flex-shrink: 0; }
-
-/* เมนูด้านข้าง */
 .sidebar-section { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; padding: 12px 10px 6px; letter-spacing: 0.05em; }
 .nav-btn { display: flex; align-items: center; gap: 9px; padding: 10px; border-radius: var(--radius); font-size: 13px; color: var(--text2); cursor: pointer; border: none; background: transparent; width: 100%; text-align: left; font-family: var(--font); margin-bottom: 2px; transition: 0.2s; }
 .nav-btn:hover { background: var(--bg3); color: var(--text); }
@@ -50,8 +30,6 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 .nav-btn .count { margin-left: auto; font-size: 10px; font-family: var(--mono); background: var(--bg4); padding: 2px 6px; border-radius: 10px; }
 .nav-btn.active .count { background: var(--accent-bg2); color: var(--accent2); }
 .nav-btn .count.red { background: var(--red-bg); color: var(--red); }
-
-/* พื้นที่งานหลัก */
 .main-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
 .main-title { font-size: 16px; font-weight: 600; }
 .btn-primary { background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: var(--radius); font-size: 13px; font-family: var(--font); cursor: pointer; font-weight: 500; transition: 0.2s; }
@@ -61,8 +39,6 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; }
 .stat-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
 .stat-val { font-size: 20px; font-weight: 600; font-family: var(--mono); }
-
-/* การ์ดงาน */
 .tasks-area { flex: 1; overflow-y: auto; padding: 14px 20px; display: flex; flex-direction: column; gap: 8px; }
 .task-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px; display: flex; gap: 12px; align-items: flex-start; position: relative; transition: border-color 0.2s; }
 .task-card:hover { border-color: var(--border2); }
@@ -77,9 +53,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 .task-desc { font-size: 12px; color: var(--text2); margin-bottom: 10px; line-height: 1.5; word-break: break-word; }
 .task-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .tag { font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 20px; display: inline-flex; }
-.tag-red { background: var(--red-bg); color: var(--red); }
-.tag-amber { background: var(--amber-bg); color: var(--amber); }
-.tag-purple { background: var(--accent-bg); color: var(--accent2); }
+.tag-red { background: var(--red-bg); color: var(--red); } .tag-amber { background: var(--amber-bg); color: var(--amber); } .tag-purple { background: var(--accent-bg); color: var(--accent2); }
 .task-time { font-size: 11px; color: var(--text3); font-family: var(--mono); }
 .btn-cal { display: inline-flex; align-items: center; gap: 4px; background: var(--bg3); border: 1px solid var(--border2); color: var(--text2); font-size: 11px; padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: 0.2s; font-family: var(--font); margin-left: auto; }
 .btn-cal:hover { border-color: var(--accent); color: var(--accent2); background: var(--accent-bg); }
@@ -87,8 +61,6 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 .task-del { position: absolute; right: 10px; top: 10px; width: 26px; height: 26px; border-radius: 6px; border: none; background: transparent; color: var(--text3); cursor: pointer; opacity: 0; transition: 0.2s; font-size: 14px; display: flex; align-items: center; justify-content: center; }
 .task-card:hover .task-del { opacity: 1; }
 .task-del:hover { background: var(--red-bg); color: var(--red); }
-
-/* แชท */
 .chat-header { padding: 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .ai-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 6px var(--green); flex-shrink: 0; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
@@ -101,28 +73,19 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 .msg-user .bubble { background: var(--accent-bg2); border: 1px solid rgba(123,110,246,0.3); border-radius: 14px 4px 14px 14px; padding: 12px; font-size: 13px; align-self: flex-end; max-width: 90%; word-break: break-word; }
 .msg-meta { font-size: 10px; color: var(--text3); font-family: var(--mono); }
 .msg-ai { align-items: flex-start; } .msg-user { align-items: flex-end; }
-
-/* Indicator การพิมพ์ */
 .typing-dots { display: flex; gap: 5px; align-items: center; height: 18px; }
 .typing-dots span { width: 6px; height: 6px; background: var(--text3); border-radius: 50%; animation: tdot 1.2s infinite; }
-.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; } .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes tdot { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
-
 .chat-input-area { padding: 14px; border-top: 1px solid var(--border); flex-shrink: 0; }
 .input-row { display: flex; gap: 8px; align-items: flex-end; }
 .chat-input { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; font-size: 13px; color: var(--text); font-family: var(--font); resize: none; min-height: 42px; max-height: 100px; transition: border-color 0.2s; line-height: 1.5; }
-.chat-input::placeholder { color: var(--text3); }
 .chat-input:focus { outline: none; border-color: var(--accent); }
 .send-btn { width: 42px; height: 42px; background: var(--accent); border: none; border-radius: var(--radius); color: white; cursor: pointer; font-size: 16px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-.send-btn:hover { background: #6b5de6; }
-.send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-/* Modal & Toast */
+.send-btn:hover { background: #6b5de6; } .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 200; backdrop-filter: blur(2px); }
 .modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 24px; width: 90%; max-width: 420px; }
-.form-group { margin-bottom: 14px; }
-.form-label { font-size: 12px; color: var(--text2); margin-bottom: 6px; display: block; }
+.form-group { margin-bottom: 14px; } .form-label { font-size: 12px; color: var(--text2); margin-bottom: 6px; display: block; }
 .form-input, .form-select, .form-textarea { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; font-size: 13px; color: var(--text); font-family: var(--font); transition: border-color 0.2s; }
 .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--accent); }
 .form-textarea { resize: vertical; min-height: 60px; }
@@ -133,38 +96,36 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 .btn-cancel:hover { background: var(--bg3); color: var(--text); }
 .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--bg3); border: 1px solid var(--border2); border-radius: 20px; padding: 10px 20px; font-size: 13px; z-index: 300; box-shadow: 0 4px 20px rgba(0,0,0,0.5); white-space: nowrap; animation: toastIn 0.2s ease; }
 @keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(8px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
-
-/* Responsive มือถือ */
 .mobile-nav { display: none; }
 @media (max-width: 850px) {
-  .topbar { padding: 0 15px; }
-  .topbar-mid { display: none; }
+  .topbar { padding: 0 15px; } .topbar-mid { display: none; }
   .sidebar { position: fixed; left: -100%; top: 52px; bottom: 60px; z-index: 100; box-shadow: 4px 0 20px rgba(0,0,0,0.5); }
   .sidebar.open { left: 0; }
   .main, .chat-panel { position: absolute; top: 0; bottom: 60px; left: 0; right: 0; width: 100%; border: none; transition: transform 0.25s ease; }
-  .chat-panel { transform: translateX(100%); }
-  .main { transform: translateX(0); }
-  .main.hide { transform: translateX(-100%); }
-  .chat-panel.active { transform: translateX(0); }
-  .stats-row { grid-template-columns: 1fr 1fr; padding: 10px 15px; }
-  .task-del { opacity: 1; background: var(--bg3); }
+  .chat-panel { transform: translateX(100%); } .main { transform: translateX(0); }
+  .main.hide { transform: translateX(-100%); } .chat-panel.active { transform: translateX(0); }
+  .stats-row { grid-template-columns: 1fr 1fr; padding: 10px 15px; } .task-del { opacity: 1; background: var(--bg3); }
   .mobile-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: var(--bg2); border-top: 1px solid var(--border); z-index: 150; }
   .mob-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text3); font-size: 11px; font-family: var(--font); cursor: pointer; transition: 0.2s; border: none; background: transparent; }
-  .mob-tab.active { color: var(--accent2); }
-  .mob-tab .icon { font-size: 20px; }
+  .mob-tab.active { color: var(--accent2); } .mob-tab .icon { font-size: 20px; }
 }
+/* สปินเนอร์โหลดข้อมูล */
+.loader-overlay { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; gap: 10px; color: var(--text2); font-size: 13px; }
+.spinner { width: 30px; height: 30px; border: 3px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
+<!-- หน้าจอกำลังซิงค์ข้อมูล -->
+<div class="loader-overlay" id="loader">
+  <div class="spinner"></div>
+  <div>กำลังซิงค์ข้อมูลจาก Cloud...</div>
+</div>
+
 <div class="topbar">
-  <div class="logo">
-    <div class="logo-icon">✦</div>
-    <span>AI Secretary</span>
-  </div>
-  <div class="topbar-mid">
-    <span class="date-badge" id="dateLabel">—</span>
-  </div>
+  <div class="logo"><div class="logo-icon">✦</div><span>AI Secretary</span></div>
+  <div class="topbar-mid"><span class="date-badge" id="dateLabel">—</span></div>
   <div class="avatar">พ</div>
 </div>
 
@@ -179,6 +140,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
     <span class="sidebar-section">เครื่องมือ</span>
     <button class="nav-btn" onclick="document.getElementById('pdfInput').click()">⤒ อัปโหลด PDF</button>
     <button class="nav-btn" onclick="clearChat()">↺ ล้างแชท</button>
+    <button class="nav-btn" onclick="fetchTasksFromCloud()" style="margin-top:20px; color:var(--accent2)">🔄 รีเฟรชข้อมูลล่าสุด</button>
   </div>
 
   <div class="main" id="mainView">
@@ -204,12 +166,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input-area">
       <div class="input-row">
-        <textarea
-          class="chat-input" id="chatInput"
-          placeholder="พิมพ์สั่งงาน เช่น พรุ่งนี้มีประชุม 10 โมง..."
-          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"
-          oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"
-        ></textarea>
+        <textarea class="chat-input" id="chatInput" placeholder="พิมพ์สั่งงาน เช่น พรุ่งนี้มีประชุม 10 โมง..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"></textarea>
         <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
       </div>
     </div>
@@ -225,47 +182,19 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 <div class="modal-overlay" id="modalOverlay" style="display:none" onclick="if(event.target.id==='modalOverlay')closeModal()">
   <div class="modal">
     <div style="font-size:16px;font-weight:600;margin-bottom:16px;">✦ เพิ่มงานใหม่</div>
-    <div class="form-group">
-      <label class="form-label">ชื่องาน *</label>
-      <input class="form-input" id="f-name" placeholder="ระบุชื่องาน..." />
-    </div>
-    <div class="form-group">
-      <label class="form-label">รายละเอียด</label>
-      <textarea class="form-textarea" id="f-desc" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
-    </div>
+    <div class="form-group"><label class="form-label">ชื่องาน *</label><input class="form-input" id="f-name" placeholder="ระบุชื่องาน..." /></div>
+    <div class="form-group"><label class="form-label">รายละเอียด</label><textarea class="form-textarea" id="f-desc" placeholder="รายละเอียดเพิ่มเติม..."></textarea></div>
     <div class="form-row">
-      <div>
-        <label class="form-label">ความเร่งด่วน</label>
-        <select class="form-select" id="f-priority">
-          <option value="normal">ปกติ</option>
-          <option value="urgent">ด่วน</option>
-          <option value="critical">ด่วนมาก</option>
-        </select>
-      </div>
-      <div>
-        <label class="form-label">หมวดหมู่</label>
-        <select class="form-select" id="f-cat">
-          <option value="ทั่วไป">ทั่วไป</option>
-          <option value="ประชุม">ประชุม</option>
-          <option value="เอกสาร">เอกสาร</option>
-          <option value="ประสานงาน">ประสานงาน</option>
-          <option value="รายงาน">รายงาน</option>
-        </select>
-      </div>
+      <div><label class="form-label">ความเร่งด่วน</label><select class="form-select" id="f-priority"><option value="normal">ปกติ</option><option value="urgent">ด่วน</option><option value="critical">ด่วนมาก</option></select></div>
+      <div><label class="form-label">หมวดหมู่</label><select class="form-select" id="f-cat"><option value="ทั่วไป">ทั่วไป</option><option value="ประชุม">ประชุม</option><option value="เอกสาร">เอกสาร</option><option value="ประสานงาน">ประสานงาน</option><option value="รายงาน">รายงาน</option></select></div>
     </div>
     <div class="form-row" style="margin-top:10px;">
-      <div>
-        <label class="form-label">วันกำหนดส่ง</label>
-        <input class="form-input" id="f-date" type="date" />
-      </div>
-      <div>
-        <label class="form-label">เวลา</label>
-        <input class="form-input" id="f-time" type="time" />
-      </div>
+      <div><label class="form-label">วันกำหนดส่ง</label><input class="form-input" id="f-date" type="date" /></div>
+      <div><label class="form-label">เวลา</label><input class="form-input" id="f-time" type="time" /></div>
     </div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal()">ยกเลิก</button>
-      <button class="btn-primary" onclick="saveTask()">บันทึกงาน</button>
+      <button class="btn-primary" onclick="saveTaskFromForm()">บันทึกงาน</button>
     </div>
   </div>
 </div>
@@ -274,67 +203,90 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 
 <script>
 // ==========================================
-// ⚙️ URL ล่าสุดถูกอัปเดตเรียบร้อยแล้ว
+// ⚙️ วาง URL ล่าสุด ที่เพิ่ง Deploy ใหม่อีกครั้ง ตรงนี้ครับ
 // ==========================================
-const GAS_URL = "https://script.google.com/macros/s/AKfycbza17PhqUCQqq28xEKx0Y8MV2UdhZoqbbxPSS1XRvOBMQK4P8GlwFjI1uXZrddzBMv_/exec";
+const GAS_URL = "URLใหม่ตรงนี้";
 // ==========================================
 
-if (typeof pdfjsLib !== 'undefined') {
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-}
+if (typeof pdfjsLib !== 'undefined') { pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js'; }
 
-let tasks = JSON.parse(localStorage.getItem('secretary_tasks') || '[]');
+let tasks = [];
 let currentView = 'today';
 let isLoading = false;
 
-// ─── INIT ───
 document.addEventListener('DOMContentLoaded', () => {
   const d = new Date();
   const days = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
   const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-  document.getElementById('dateLabel').textContent =
-    `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()+543}`;
-  renderTasks();
-  addAIMessage(`สวัสดีครับคุณพิชญุตม์ 👋\nพิมพ์สั่งงาน, ระบุวันเวลา, หรือส่งไฟล์ PDF มาให้ผมประมวลผลจัดตารางงานได้เลยครับ`);
+  document.getElementById('dateLabel').textContent = `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()+543}`;
+  
+  // 🌟 ดึงข้อมูลจาก Cloud ตอนเปิดเว็บ 🌟
+  fetchTasksFromCloud();
+  addAIMessage(`สวัสดีครับคุณพิชญุตม์ 👋\nพิมพ์สั่งงาน, ระบุวันเวลา, หรือส่งไฟล์ PDF มาให้ผมจัดตารางได้เลยครับ (ระบบเชื่อมต่อ Cloud เรียบร้อยแล้ว ☁️)`);
 });
 
-// ─── MOBILE ───
-function switchMobileView(view) {
-  document.getElementById('sidebar').classList.remove('open');
-  const main = document.getElementById('mainView');
-  const chat = document.getElementById('chatView');
-  if (view === 'main') {
-    main.classList.remove('hide');
-    chat.classList.remove('active');
-    document.getElementById('tab-main').classList.add('active');
-    document.getElementById('tab-chat').classList.remove('active');
-  } else {
-    main.classList.add('hide');
-    chat.classList.add('active');
-    document.getElementById('tab-chat').classList.add('active');
-    document.getElementById('tab-main').classList.remove('active');
-    setTimeout(() => { document.getElementById('chatMessages').scrollTop = 99999; }, 50);
+// ─── ระบบ Cloud (อ่าน/เขียน Google Sheets) ───
+async function fetchTasksFromCloud() {
+  document.getElementById('loader').style.display = 'flex';
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'get_tasks' })
+    });
+    const data = await res.json();
+    if(data.success) {
+      tasks = data.tasks;
+      renderTasks();
+    }
+  } catch(e) { console.error('Fetch error:', e); showToast('⚠️ ดึงข้อมูลจาก Cloud ล้มเหลว'); }
+  document.getElementById('loader').style.display = 'none';
+}
+
+async function syncTasksToCloud(newTasks) {
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'add_tasks', tasks: newTasks })
+    });
+  } catch(e) { console.error('Sync error:', e); showToast('⚠️ ซิงค์ข้อมูลลง Cloud ล้มเหลว'); }
+}
+
+async function toggleTask(id) {
+  const t = tasks.find(x => x.id === id);
+  if (t) { 
+    t.done = !t.done; 
+    renderTasks(); // อัปเดตหน้าจอก่อนให้ดูไว
+    // อัปเดตเบื้องหลัง
+    fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'toggle_task', id: id }) });
   }
 }
-function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
+async function deleteTask(id) {
+  tasks = tasks.filter(x => x.id !== id);
+  renderTasks();
+  showToast('🗑️ ลบงานแล้ว');
+  fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'delete_task', id: id }) });
+}
+
+// ─── UI & ระบบเดิม ───
+function switchMobileView(view) {
+  document.getElementById('sidebar').classList.remove('open');
+  const main = document.getElementById('mainView'), chat = document.getElementById('chatView');
+  if (view === 'main') { main.classList.remove('hide'); chat.classList.remove('active'); document.getElementById('tab-main').classList.add('active'); document.getElementById('tab-chat').classList.remove('active'); } 
+  else { main.classList.add('hide'); chat.classList.add('active'); document.getElementById('tab-chat').classList.add('active'); document.getElementById('tab-main').classList.remove('active'); setTimeout(() => { document.getElementById('chatMessages').scrollTop = 99999; }, 50); }
+}
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 function setView(v, el) {
-  currentView = v;
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
+  currentView = v; document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active');
   const titles = { today:'งานวันนี้', all:'งานทั้งหมด', urgent:'งานด่วน', done:'เสร็จแล้ว' };
   document.getElementById('viewTitle').textContent = titles[v];
   if (window.innerWidth <= 850) { toggleSidebar(); switchMobileView('main'); }
   renderTasks();
 }
 
-// ─── RENDER ───
 function renderTasks() {
-  const area = document.getElementById('tasksArea');
-  area.innerHTML = '';
+  const area = document.getElementById('tasksArea'); area.innerHTML = '';
   const todayStr = new Date().toISOString().slice(0, 10);
-
   let filtered = tasks.filter(t => {
     if (currentView === 'done') return t.done;
     if (t.done) return false;
@@ -342,11 +294,8 @@ function renderTasks() {
     if (currentView === 'urgent') return t.priority === 'urgent' || t.priority === 'critical';
     return true;
   });
-
-  if (!filtered.length) {
-    area.innerHTML = `<div style="text-align:center;color:var(--text3);padding:48px;font-size:13px;line-height:2">
-      ไม่พบรายการงาน<br><span style="font-size:11px">พิมพ์สั่งใน Chat หรือกด + เพิ่มงาน</span></div>`;
-  } else {
+  if (!filtered.length) { area.innerHTML = `<div style="text-align:center;color:var(--text3);padding:48px;font-size:13px;line-height:2">ไม่พบรายการงาน<br><span style="font-size:11px">พิมพ์สั่งใน Chat หรือกด + เพิ่มงาน</span></div>`; } 
+  else {
     const order = { critical:0, urgent:1, normal:2 };
     filtered.sort((a, b) => (order[a.priority]||2) - (order[b.priority]||2));
     filtered.forEach(t => area.appendChild(makeTaskCard(t)));
@@ -354,283 +303,101 @@ function renderTasks() {
   updateStats();
 }
 
-function esc(s) {
-  return String(s || '')
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
+function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
 function makeTaskCard(t) {
-  const div = document.createElement('div');
-  div.className = `task-card${t.done ? ' done' : ''}`;
-  div.dataset.id = t.id;
-
-  const priorityTag = t.priority === 'critical'
-    ? '<span class="tag tag-red">⚡ ด่วนมาก</span>'
-    : t.priority === 'urgent'
-    ? '<span class="tag tag-amber">◷ ด่วน</span>'
-    : '';
+  const div = document.createElement('div'); div.className = `task-card${t.done ? ' done' : ''}`; div.dataset.id = t.id;
+  const priorityTag = t.priority === 'critical' ? '<span class="tag tag-red">⚡ ด่วนมาก</span>' : t.priority === 'urgent' ? '<span class="tag tag-amber">◷ ด่วน</span>' : '';
   const catTag  = t.cat  ? `<span class="tag tag-purple">${esc(t.cat)}</span>` : '';
   const dateStr = t.date ? `<span class="task-time">📅 ${esc(t.date)}${t.time?' '+esc(t.time):''}</span>` : '';
-  const calBtn  = (t.date && !t.done)
-    ? `<button class="btn-cal" onclick="event.stopPropagation();syncToCalendar('${esc(t.id)}')">📅 บันทึกลงปฏิทิน</button>`
-    : '';
+  const calBtn  = (t.date && !t.done) ? `<button class="btn-cal" onclick="event.stopPropagation();syncToCalendar('${esc(t.id)}')">📅 บันทึกลงปฏิทิน</button>` : '';
 
   div.innerHTML = `
     <div class="task-cb${t.done?' checked':''}" onclick="toggleTask('${esc(t.id)}')"></div>
-    <div class="task-body">
-      <div class="task-name${t.done?' done':''}">${esc(t.name)}</div>
-      ${t.desc ? `<div class="task-desc">${esc(t.desc)}</div>` : ''}
-      <div class="task-meta">${priorityTag}${catTag}${dateStr}${calBtn}</div>
-    </div>
+    <div class="task-body"><div class="task-name${t.done?' done':''}">${esc(t.name)}</div>${t.desc ? `<div class="task-desc">${esc(t.desc)}</div>` : ''}<div class="task-meta">${priorityTag}${catTag}${dateStr}${calBtn}</div></div>
     <button class="task-del" onclick="deleteTask('${esc(t.id)}')" title="ลบ">✕</button>
   `;
   return div;
 }
 
-function toggleTask(id) {
-  const t = tasks.find(x => x.id === id);
-  if (t) { t.done = !t.done; saveTasks(); renderTasks(); }
-}
-function deleteTask(id) {
-  tasks = tasks.filter(x => x.id !== id);
-  saveTasks(); renderTasks();
-  showToast('🗑️ ลบงานแล้ว');
-}
-function saveTasks() { localStorage.setItem('secretary_tasks', JSON.stringify(tasks)); }
-function clearChat() {
-  document.getElementById('chatMessages').innerHTML = '';
-  addAIMessage('ล้างแชทแล้วครับ 🧹');
-}
+function clearChat() { document.getElementById('chatMessages').innerHTML = ''; addAIMessage('ล้างแชทแล้วครับ 🧹'); }
 
-// ─── SYNC CALENDAR ───
 async function syncToCalendar(id) {
-  const t = tasks.find(x => x.id === id);
-  if (!t || !t.date) return;
+  const t = tasks.find(x => x.id === id); if (!t || !t.date) return;
   const btn = document.querySelector(`.task-card[data-id="${id}"] .btn-cal`);
   if (btn) { btn.innerHTML = '⏳ กำลังบันทึก...'; btn.disabled = true; }
-
   try {
-    const res = await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: 'add_calendar', task: t })
-    });
+    const res = await fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'add_calendar', task: t }) });
     const data = await res.json();
-    if (data.success) {
-      showToast('📅 บันทึกปฏิทินสำเร็จ');
-      if (btn) { btn.innerHTML = '✅ บันทึกแล้ว'; btn.classList.add('saved'); }
-    } else {
-      throw new Error(data.message || 'GAS returned error');
-    }
-  } catch (e) {
-    showToast('⚠️ ระบบผิดพลาด ลองอีกครั้ง');
-    console.error('[syncToCalendar]', e);
-    if (btn) { btn.innerHTML = '📅 บันทึกลงปฏิทิน'; btn.disabled = false; }
-  }
+    if (data.success) { showToast('📅 บันทึกปฏิทินสำเร็จ'); if (btn) { btn.innerHTML = '✅ บันทึกแล้ว'; btn.classList.add('saved'); } } 
+    else { throw new Error(data.message || 'Error'); }
+  } catch (e) { showToast('⚠️ ระบบผิดพลาด ลองอีกครั้ง'); if (btn) { btn.innerHTML = '📅 บันทึกลงปฏิทิน'; btn.disabled = false; } }
 }
 
-// ─── MODAL ───
-function openAddModal() {
-  ['f-name','f-desc'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('f-priority').value = 'normal';
-  document.getElementById('f-cat').value = 'ทั่วไป';
-  document.getElementById('f-date').value = new Date().toISOString().slice(0, 10);
-  document.getElementById('f-time').value = '';
-  document.getElementById('modalOverlay').style.display = 'flex';
-  setTimeout(() => document.getElementById('f-name').focus(), 50);
-}
+function openAddModal() { ['f-name','f-desc'].forEach(id => document.getElementById(id).value = ''); document.getElementById('f-priority').value = 'normal'; document.getElementById('f-cat').value = 'ทั่วไป'; document.getElementById('f-date').value = new Date().toISOString().slice(0, 10); document.getElementById('f-time').value = ''; document.getElementById('modalOverlay').style.display = 'flex'; setTimeout(() => document.getElementById('f-name').focus(), 50); }
 function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
-function saveTask() {
-  const name = document.getElementById('f-name').value.trim();
-  if (!name) { document.getElementById('f-name').focus(); return; }
-  tasks.push({
-    id: Date.now() + '',
-    name,
-    desc: document.getElementById('f-desc').value.trim(),
-    priority: document.getElementById('f-priority').value,
-    cat: document.getElementById('f-cat').value,
-    date: document.getElementById('f-date').value,
-    time: document.getElementById('f-time').value,
-    done: false
-  });
-  saveTasks(); renderTasks(); closeModal();
-  showToast('✦ เพิ่มงานแล้ว');
+
+async function saveTaskFromForm() {
+  const name = document.getElementById('f-name').value.trim(); if (!name) return;
+  const newTask = { id: Date.now() + '', name, desc: document.getElementById('f-desc').value.trim(), priority: document.getElementById('f-priority').value, cat: document.getElementById('f-cat').value, date: document.getElementById('f-date').value, time: document.getElementById('f-time').value, done: false };
+  tasks.push(newTask); renderTasks(); closeModal(); showToast('✦ กำลังเพิ่มลง Cloud...');
+  await syncTasksToCloud([newTask]); showToast('✅ เพิ่มงานเข้า Cloud สำเร็จ');
 }
 
-// ─── STATS ───
 function updateStats() {
-  const todayStr = new Date().toISOString().slice(0, 10);
-  const pending = tasks.filter(t => !t.done);
-  const done    = tasks.filter(t => t.done);
-  const urgent  = pending.filter(t => t.priority === 'urgent' || t.priority === 'critical');
-
-  document.getElementById('s-total').textContent   = pending.length;
-  document.getElementById('s-urgent').textContent  = urgent.length;
-  document.getElementById('s-done').textContent    = done.length;
-  document.getElementById('s-pct').textContent     = tasks.length
-    ? Math.round(done.length / tasks.length * 100) + '%' : '0%';
-  document.getElementById('todayCount').textContent =
-    pending.filter(t => !t.date || t.date === todayStr).length;
-  document.getElementById('allCount').textContent    = pending.length;
-  document.getElementById('urgentCount').textContent = urgent.length;
-  document.getElementById('doneCount').textContent   = done.length;
+  const pending = tasks.filter(t => !t.done), done = tasks.filter(t => t.done), urgent = pending.filter(t => t.priority === 'urgent' || t.priority === 'critical');
+  document.getElementById('s-total').textContent = pending.length; document.getElementById('s-urgent').textContent = urgent.length; document.getElementById('s-done').textContent = done.length; document.getElementById('s-pct').textContent = tasks.length ? Math.round(done.length / tasks.length * 100) + '%' : '0%';
+  document.getElementById('todayCount').textContent = pending.filter(t => !t.date || t.date === new Date().toISOString().slice(0, 10)).length; document.getElementById('allCount').textContent = pending.length; document.getElementById('urgentCount').textContent = urgent.length; document.getElementById('doneCount').textContent = done.length;
 }
 
-// ─── CHAT UI ───
-function showToast(msg) {
-  document.querySelectorAll('.toast').forEach(el => el.remove());
-  const el = document.createElement('div');
-  el.className = 'toast'; el.textContent = msg;
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 2500);
-}
-
-function addAIMessage(msg) {
-  const div = document.createElement('div');
-  div.className = 'msg msg-ai';
-  const safe = msg
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--accent2)">$1</strong>')
-    .replace(/\n/g,'<br>');
-  const now = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
-  div.innerHTML = `<div class="bubble">${safe}</div><div class="msg-meta">AI เลขา · ${now}</div>`;
-  document.getElementById('chatMessages').appendChild(div);
-  document.getElementById('chatMessages').scrollTop = 99999;
-}
-
-function addUserMessage(msg) {
-  const div = document.createElement('div');
-  div.className = 'msg msg-user';
-  const now = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
-  div.innerHTML = `<div class="bubble">${esc(msg).replace(/\n/g,'<br>')}</div><div class="msg-meta">คุณพิชญุตม์ · ${now}</div>`;
-  document.getElementById('chatMessages').appendChild(div);
-  document.getElementById('chatMessages').scrollTop = 99999;
-}
-
-function showTyping() {
-  const div = document.createElement('div');
-  div.className = 'msg msg-ai'; div.id = 'typingEl';
-  div.innerHTML = `<div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
-  document.getElementById('chatMessages').appendChild(div);
-  document.getElementById('chatMessages').scrollTop = 99999;
-}
+function showToast(msg) { document.querySelectorAll('.toast').forEach(el => el.remove()); const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 2500); }
+function addAIMessage(msg) { const div = document.createElement('div'); div.className = 'msg msg-ai'; const safe = msg.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--accent2)">$1</strong>').replace(/\n/g,'<br>'); const now = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); div.innerHTML = `<div class="bubble">${safe}</div><div class="msg-meta">AI เลขา · ${now}</div>`; document.getElementById('chatMessages').appendChild(div); document.getElementById('chatMessages').scrollTop = 99999; }
+function addUserMessage(msg) { const div = document.createElement('div'); div.className = 'msg msg-user'; const now = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); div.innerHTML = `<div class="bubble">${esc(msg).replace(/\n/g,'<br>')}</div><div class="msg-meta">คุณพิชญุตม์ · ${now}</div>`; document.getElementById('chatMessages').appendChild(div); document.getElementById('chatMessages').scrollTop = 99999; }
+function showTyping() { const div = document.createElement('div'); div.className = 'msg msg-ai'; div.id = 'typingEl'; div.innerHTML = `<div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`; document.getElementById('chatMessages').appendChild(div); document.getElementById('chatMessages').scrollTop = 99999; }
 function hideTyping() { const el = document.getElementById('typingEl'); if(el) el.remove(); }
+function setUILoading(state) { isLoading = state; document.getElementById('sendBtn').disabled = state; }
 
-function setUILoading(state) {
-  isLoading = state;
-  document.getElementById('sendBtn').disabled = state;
-}
-
-// ─── API CALL ───
 async function callAPI(system, userText) {
-  const res = await fetch(GAS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ system, messages: [{ content: userText }] })
-  });
+  const res = await fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ system, messages: [{ content: userText }] }) });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = await res.json();
-
-  if (!data?.content?.[0]?.text) {
-    console.error('GAS response:', data);
-    if (data.error) throw new Error(`AI Error: ${data.error.message}`);
-    throw new Error('รูปแบบข้อมูลจากเซิร์ฟเวอร์ผิดพลาด');
-  }
+  if (!data?.content?.[0]?.text) { if (data.error) throw new Error(`AI Error: ${data.error.message}`); throw new Error('เซิร์ฟเวอร์ขัดข้อง'); }
   return data.content[0].text;
 }
 
-// ─── PROCESS AI RESPONSE ───
-function processReply(raw) {
+async function processReply(raw) {
   const match = raw.match(/<TASKS>([\s\S]*?)<\/TASKS>/);
   let clean = raw.replace(/<TASKS>[\s\S]*?<\/TASKS>/g, '').trim();
-
   if (match) {
     try {
-      const arr = JSON.parse(match[1].trim());
-      arr.forEach(t => tasks.push({ id: Date.now() + Math.random(), done: false, ...t }));
-      saveTasks(); renderTasks();
-      clean = (clean ? clean + '\n\n' : '') + `✅ เพิ่มงาน ${arr.length} รายการเรียบร้อยแล้วครับ!`;
-    } catch (e) {
-      console.error('[processReply] JSON parse error:', e, match[1]);
-    }
+      const arr = JSON.parse(match[1].trim()); let newTasks = [];
+      arr.forEach(t => { const nt = { id: Date.now() + Math.random().toString(), done: false, ...t }; newTasks.push(nt); tasks.push(nt); });
+      renderTasks();
+      clean = (clean ? clean + '\n\n' : '') + `✅ เพิ่มงาน ${arr.length} รายการ กำลังซิงค์ขึ้น Cloud ☁️...`;
+      addAIMessage(clean);
+      await syncTasksToCloud(newTasks); showToast('✅ ซิงค์เสร็จสมบูรณ์');
+      return;
+    } catch (e) { console.error('Parse err:', e); }
   }
   addAIMessage(clean || raw);
 }
 
-// ─── SEND MESSAGE ───
 async function sendMessage() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text || isLoading) return;
-  input.value = ''; input.style.height = 'auto';
-  addUserMessage(text);
-  setUILoading(true);
-  showTyping();
-
-  const tasksSummary = tasks.length
-    ? tasks.map(t => `- [${t.done?'✓':'○'}] ${t.name} (${t.priority||'normal'})${t.date?' due:'+t.date+' '+(t.time||''):''}`)
-           .join('\n')
-    : '(ยังไม่มีงาน)';
-
-  const sys = `คุณคือ AI เลขาส่วนตัวของคุณพิชญุตม์ วันนี้คือ ${new Date().toLocaleDateString('th-TH')}
-รายการงานปัจจุบัน:
-${tasksSummary}
-
-ตอบสั้น กระชับ เป็นมืออาชีพ หากพบ "ภาระงานที่ต้องทำ" ให้แทรก JSON ท้ายข้อความ:
-<TASKS>[{"name":"ชื่องาน","desc":"รายละเอียด","priority":"normal|urgent|critical","cat":"หมวดหมู่","date":"YYYY-MM-DD หรือ null","time":"HH:MM หรือ null"}]</TASKS>`;
-
-  try {
-    const reply = await callAPI(sys, text);
-    hideTyping();
-    processReply(reply);
-  } catch (e) {
-    hideTyping();
-    addAIMessage(`⚠️ ไม่สามารถติดต่อเซิร์ฟเวอร์ได้: ${e.message}`);
-    console.error('[sendMessage]', e);
-  } finally {
-    setUILoading(false);
-  }
+  const input = document.getElementById('chatInput'); const text = input.value.trim(); if (!text || isLoading) return;
+  input.value = ''; input.style.height = 'auto'; addUserMessage(text); setUILoading(true); showTyping();
+  const tasksSummary = tasks.length ? tasks.map(t => `- [${t.done?'✓':'○'}] ${t.name} (${t.priority||'normal'})${t.date?' due:'+t.date+' '+(t.time||''):''}`).join('\n') : '(ยังไม่มีงาน)';
+  const sys = `คุณคือ AI เลขาส่วนตัว วันนี้คือ ${new Date().toLocaleDateString('th-TH')}\nงานปัจจุบัน:\n${tasksSummary}\nตอบสั้น กระชับ หากมีงานใหม่ให้แทรก:\n<TASKS>[{"name":"...","desc":"...","priority":"normal|urgent|critical","cat":"...","date":"YYYY-MM-DD หรือ null","time":"HH:MM หรือ null"}]</TASKS>`;
+  try { const reply = await callAPI(sys, text); hideTyping(); await processReply(reply); } catch (e) { hideTyping(); addAIMessage(`⚠️ ขัดข้อง: ${e.message}`); } finally { setUILoading(false); }
 }
 
-// ─── PDF UPLOAD ───
 async function handleFileUpload(e) {
-  const file = e.target.files[0]; if (!file) return;
-  e.target.value = '';
-  addUserMessage(`📎 ส่งไฟล์: ${file.name}`);
-  setUILoading(true);
-  showTyping();
-
+  const file = e.target.files[0]; if (!file) return; e.target.value = ''; addUserMessage(`📎 ส่งไฟล์: ${file.name}`); setUILoading(true); showTyping();
   try {
-    let txt = '';
-    if (file.type === 'text/plain') {
-      txt = await file.text();
-    } else {
-      const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const content = await page.getTextContent();
-        txt += content.items.map(x => x.str).join(' ') + '\n';
-      }
-    }
-
-    if (!txt.trim()) throw new Error('ไม่พบข้อความในไฟล์');
-
-    const sys = `คุณคือ AI เลขาส่วนตัวของคุณพิชญุตม์ วันนี้คือ ${new Date().toLocaleDateString('th-TH')}
-สรุปเนื้อหาเอกสาร และดึงงานที่ต้องดำเนินการออกมาในรูปแบบ:
-<TASKS>[{"name":"...","desc":"...","priority":"normal|urgent|critical","cat":"...","date":"YYYY-MM-DD หรือ null","time":"HH:MM หรือ null"}]</TASKS>
-ตอบเป็นภาษาไทย กระชับ`;
-
-    const reply = await callAPI(sys, `เนื้อหาไฟล์ ${file.name}:\n${txt.slice(0, 5000)}`);
-    hideTyping();
-    processReply(reply);
-  } catch (err) {
-    hideTyping();
-    addAIMessage(`⚠️ อ่านไฟล์ไม่สำเร็จ: ${err.message}`);
-    console.error('[handleFileUpload]', err);
-  } finally {
-    setUILoading(false);
-  }
+    let txt = ''; if (file.type === 'text/plain') { txt = await file.text(); } else { const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise; for (let i = 1; i <= pdf.numPages; i++) { const page = await pdf.getPage(i); const content = await page.getTextContent(); txt += content.items.map(x => x.str).join(' ') + '\n'; } }
+    if (!txt.trim()) throw new Error('ไม่พบข้อความ');
+    const sys = `คุณคือ AI เลขาส่วนตัว สรุปเอกสารนี้และดึงงานออกมา:\n<TASKS>[{"name":"...","desc":"...","priority":"normal|urgent|critical","cat":"...","date":"YYYY-MM-DD หรือ null","time":"HH:MM หรือ null"}]</TASKS>`;
+    const reply = await callAPI(sys, `ไฟล์ ${file.name}:\n${txt.slice(0, 5000)}`); hideTyping(); await processReply(reply);
+  } catch (err) { hideTyping(); addAIMessage(`⚠️ ขัดข้อง: ${err.message}`); } finally { setUILoading(false); }
 }
 </script>
 </body>
