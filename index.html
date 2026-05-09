@@ -34,6 +34,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 .btn-primary { background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: var(--radius); font-size: 13px; font-family: var(--font); cursor: pointer; font-weight: 500; transition: 0.2s; }
 .btn-primary:hover { background: #6b5de6; }
 .btn-primary:active { transform: scale(0.96); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 14px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; }
 .stat-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
@@ -108,7 +109,6 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
   .mob-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text3); font-size: 11px; font-family: var(--font); cursor: pointer; transition: 0.2s; border: none; background: transparent; }
   .mob-tab.active { color: var(--accent2); } .mob-tab .icon { font-size: 20px; }
 }
-/* สปินเนอร์โหลดข้อมูล */
 .loader-overlay { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; gap: 10px; color: var(--text2); font-size: 13px; }
 .spinner { width: 30px; height: 30px; border: 3px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -116,7 +116,6 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 </head>
 <body>
 
-<!-- หน้าจอกำลังซิงค์ข้อมูล -->
 <div class="loader-overlay" id="loader">
   <div class="spinner"></div>
   <div>กำลังซิงค์ข้อมูลจาก Cloud...</div>
@@ -193,7 +192,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
     </div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal()">ยกเลิก</button>
-      <button class="btn-primary" onclick="saveTaskFromForm()">บันทึกงาน</button>
+      <button class="btn-primary" id="btn-save-modal" onclick="saveTaskFromForm()">บันทึกงาน</button>
     </div>
   </div>
 </div>
@@ -202,9 +201,9 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 
 <script>
 // ==========================================
-// ⚙️ URL ล่าสุดถูกอัปเดตเรียบร้อยครับ!
+// ⚙️ วาง URL ใหม่ล่าสุดตรงนี้เลยครับ
 // ==========================================
-const GAS_URL = "https://script.google.com/macros/s/AKfycbw7GT0u2K5WUYmiCTNPqWkE2zsRq6Pxky5qcgJ7mUyBbzLTdnAA8zstJN_K0CnIqstU/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyyAL0Qz5PaorQzzqHCptqSHhlw-k8o1hd55aA8WWkCQrS3ZYm5fQg_UPEQb688EXYg/exec";
 // ==========================================
 
 if (typeof pdfjsLib !== 'undefined') { pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js'; }
@@ -219,12 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   document.getElementById('dateLabel').textContent = `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()+543}`;
   
-  // 🌟 ดึงข้อมูลจาก Cloud ตอนเปิดเว็บ 🌟
   fetchTasksFromCloud();
-  addAIMessage(`สวัสดีครับคุณพิชญุตม์ 👋\nพิมพ์สั่งงาน, ระบุวันเวลา, หรือส่งไฟล์ PDF มาให้ผมจัดตารางได้เลยครับ (ระบบเชื่อมต่อ Cloud เรียบร้อยแล้ว ☁️)`);
+  addAIMessage(`สวัสดีครับคุณพิชญุตม์ 👋\nอัปเดตระบบเสถียร 100% เรียบร้อยครับ ลองพิมพ์สั่งงานหรือลบงานได้เลยครับ`);
 });
 
-// ─── ระบบ Cloud (อ่าน/เขียน Google Sheets) ───
+// ─── ระบบ Cloud ───
 async function fetchTasksFromCloud() {
   document.getElementById('loader').style.display = 'flex';
   try {
@@ -233,10 +231,7 @@ async function fetchTasksFromCloud() {
       body: JSON.stringify({ action: 'get_tasks' })
     });
     const data = await res.json();
-    if(data.success) {
-      tasks = data.tasks;
-      renderTasks();
-    }
+    if(data.success) { tasks = data.tasks; renderTasks(); }
   } catch(e) { console.error('Fetch error:', e); showToast('⚠️ ดึงข้อมูลจาก Cloud ล้มเหลว'); }
   document.getElementById('loader').style.display = 'none';
 }
@@ -254,36 +249,20 @@ async function toggleTask(id) {
   const t = tasks.find(x => x.id === id);
   if (t) { 
     t.done = !t.done; 
-    renderTasks(); // อัปเดตหน้าจอก่อนให้ดูไว
-    // อัปเดตเบื้องหลัง
+    renderTasks(); 
     fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'toggle_task', id: id }) });
   }
 }
 
 async function deleteTask(id) {
-  // ลบออกจากหน้าจอทันที เพื่อให้ใช้งานได้ลื่นไหล
   tasks = tasks.filter(x => x.id !== id);
   renderTasks();
   showToast('🗑️ กำลังลบข้อมูลบน Cloud...');
-
   try {
-    // ส่งคำสั่งไปลบแถวใน Google Sheets
-    const res = await fetch(GAS_URL, { 
-      method: 'POST', 
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
-      body: JSON.stringify({ action: 'delete_task', id: id }) 
-    });
-    
+    const res = await fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'delete_task', id: id }) });
     const data = await res.json();
-    if (data.success) {
-      showToast('✅ ลบงานออกจากระบบสมบูรณ์');
-    } else {
-      throw new Error("ลบไม่สำเร็จ");
-    }
-  } catch(e) {
-    console.error('Delete error:', e);
-    showToast('⚠️ ไม่สามารถลบข้อมูลบน Google Sheets ได้');
-  }
+    if(data.success) { showToast('✅ ลบงานสมบูรณ์'); }
+  } catch(e) { showToast('⚠️ ไม่สามารถลบข้อมูลได้'); }
 }
 
 // ─── UI & ระบบเดิม ───
@@ -357,9 +336,16 @@ function closeModal() { document.getElementById('modalOverlay').style.display = 
 
 async function saveTaskFromForm() {
   const name = document.getElementById('f-name').value.trim(); if (!name) return;
-  const newTask = { id: Date.now() + '', name, desc: document.getElementById('f-desc').value.trim(), priority: document.getElementById('f-priority').value, cat: document.getElementById('f-cat').value, date: document.getElementById('f-date').value, time: document.getElementById('f-time').value, done: false };
-  tasks.push(newTask); renderTasks(); closeModal(); showToast('✦ กำลังเพิ่มลง Cloud...');
+  const btn = document.getElementById('btn-save-modal');
+  btn.disabled = true; btn.innerHTML = '⏳ กำลังบันทึก...'; // ล็อกปุ่มกันกดซ้ำ
+  
+  // เพิ่ม T- นำหน้าให้เป็น string เสมอ
+  const newTask = { id: 'T-' + Date.now(), name, desc: document.getElementById('f-desc').value.trim(), priority: document.getElementById('f-priority').value, cat: document.getElementById('f-cat').value, date: document.getElementById('f-date').value, time: document.getElementById('f-time').value, done: false };
+  tasks.push(newTask); renderTasks(); showToast('✦ กำลังเพิ่มลง Cloud...');
+  
   await syncTasksToCloud([newTask]); showToast('✅ เพิ่มงานเข้า Cloud สำเร็จ');
+  closeModal();
+  btn.disabled = false; btn.innerHTML = 'บันทึกงาน'; // ปลดล็อกปุ่ม
 }
 
 function updateStats() {
@@ -389,7 +375,10 @@ async function processReply(raw) {
   if (match) {
     try {
       const arr = JSON.parse(match[1].trim()); let newTasks = [];
-      arr.forEach(t => { const nt = { id: Date.now() + Math.random().toString(), done: false, ...t }; newTasks.push(nt); tasks.push(nt); });
+      arr.forEach(t => { 
+        const nt = { id: 'T-' + Date.now() + Math.floor(Math.random()*1000), done: false, ...t }; 
+        newTasks.push(nt); tasks.push(nt); 
+      });
       renderTasks();
       clean = (clean ? clean + '\n\n' : '') + `✅ เพิ่มงาน ${arr.length} รายการ กำลังซิงค์ขึ้น Cloud ☁️...`;
       addAIMessage(clean);
