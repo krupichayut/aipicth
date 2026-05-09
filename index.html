@@ -392,8 +392,18 @@ async function processReply(raw) {
 async function sendMessage() {
   const input = document.getElementById('chatInput'); const text = input.value.trim(); if (!text || isLoading) return;
   input.value = ''; input.style.height = 'auto'; addUserMessage(text); setUILoading(true); showTyping();
-  const tasksSummary = tasks.length ? tasks.map(t => `- [${t.done?'✓':'○'}] ${t.name} (${t.priority||'normal'})${t.date?' due:'+t.date+' '+(t.time||''):''}`).join('\n') : '(ยังไม่มีงาน)';
-  const sys = `คุณคือ AI เลขาส่วนตัว วันนี้คือ ${new Date().toLocaleDateString('th-TH')}\nงานปัจจุบัน:\n${tasksSummary}\nตอบสั้น กระชับ หากมีงานใหม่ให้แทรก:\n<TASKS>[{"name":"...","desc":"...","priority":"normal|urgent|critical","cat":"...","date":"YYYY-MM-DD หรือ null","time":"HH:MM หรือ null"}]</TASKS>`;
+  
+  // ย่อข้อมูลงานเดิมให้สั้นลง
+  const tasksSummary = tasks.length ? tasks.map(t => `- [${t.done?'✓':'○'}] ${t.name}`).join('\n') : '(ยังไม่มีงาน)';
+  
+  // 🌟 อัปเดตคำสั่งควบคุม AI ให้เด็ดขาด ห้ามบันทึกซ้ำ 🌟
+  const sys = `คุณคือ AI เลขาส่วนตัว วันนี้คือ ${new Date().toLocaleDateString('th-TH')}
+งานปัจจุบันของคุณพิชญุตม์ (ข้อมูลอ้างอิง ห้ามส่งงานเหล่านี้กลับมาสร้างซ้ำ):
+${tasksSummary}
+
+ตอบสั้น กระชับ เป็นมืออาชีพ หากผู้ใช้สั่ง "เพิ่มงานใหม่" ให้แทรก JSON **เฉพาะงานที่เพิ่งสั่งใหม่เท่านั้น** ไว้ท้ายข้อความ:
+<TASKS>[{"name":"...","desc":"...","priority":"normal|urgent|critical","cat":"...","date":"YYYY-MM-DD หรือ null","time":"HH:MM หรือ null"}]</TASKS>`;
+  
   try { const reply = await callAPI(sys, text); hideTyping(); await processReply(reply); } catch (e) { hideTyping(); addAIMessage(`⚠️ ขัดข้อง: ${e.message}`); } finally { setUILoading(false); }
 }
 
@@ -402,7 +412,10 @@ async function handleFileUpload(e) {
   try {
     let txt = ''; if (file.type === 'text/plain') { txt = await file.text(); } else { const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise; for (let i = 1; i <= pdf.numPages; i++) { const page = await pdf.getPage(i); const content = await page.getTextContent(); txt += content.items.map(x => x.str).join(' ') + '\n'; } }
     if (!txt.trim()) throw new Error('ไม่พบข้อความ');
-    const sys = `คุณคือ AI เลขาส่วนตัว สรุปเอกสารนี้และดึงงานออกมา:\n<TASKS>[{"name":"...","desc":"...","priority":"normal|urgent|critical","cat":"...","date":"YYYY-MM-DD หรือ null","time":"HH:MM หรือ null"}]</TASKS>`;
+    
+    // 🌟 อัปเดตคำสั่งตอนอ่าน PDF 🌟
+    const sys = `คุณคือ AI เลขาส่วนตัว สรุปเอกสารนี้และดึงเฉพาะ "ภาระงานที่ต้องทำ" ออกมาในรูปแบบ JSON:\n<TASKS>[{"name":"...","desc":"...","priority":"normal|urgent|critical","cat":"...","date":"YYYY-MM-DD หรือ null","time":"HH:MM หรือ null"}]</TASKS>`;
+    
     const reply = await callAPI(sys, `ไฟล์ ${file.name}:\n${txt.slice(0, 5000)}`); hideTyping(); await processReply(reply);
   } catch (err) { hideTyping(); addAIMessage(`⚠️ ขัดข้อง: ${err.message}`); } finally { setUILoading(false); }
 }
