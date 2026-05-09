@@ -261,10 +261,29 @@ async function toggleTask(id) {
 }
 
 async function deleteTask(id) {
+  // ลบออกจากหน้าจอทันที เพื่อให้ใช้งานได้ลื่นไหล
   tasks = tasks.filter(x => x.id !== id);
   renderTasks();
-  showToast('🗑️ ลบงานแล้ว');
-  fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'delete_task', id: id }) });
+  showToast('🗑️ กำลังลบข้อมูลบน Cloud...');
+
+  try {
+    // ส่งคำสั่งไปลบแถวใน Google Sheets
+    const res = await fetch(GAS_URL, { 
+      method: 'POST', 
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+      body: JSON.stringify({ action: 'delete_task', id: id }) 
+    });
+    
+    const data = await res.json();
+    if (data.success) {
+      showToast('✅ ลบงานออกจากระบบสมบูรณ์');
+    } else {
+      throw new Error("ลบไม่สำเร็จ");
+    }
+  } catch(e) {
+    console.error('Delete error:', e);
+    showToast('⚠️ ไม่สามารถลบข้อมูลบน Google Sheets ได้');
+  }
 }
 
 // ─── UI & ระบบเดิม ───
